@@ -32,6 +32,11 @@ public class AuctionController {
         auctionService.createAuction(auction);
     }
 
+    @GetMapping("/auctions/{auctionId}")
+    public AuctionDto getAuction(@PathVariable UUID auctionId) {
+        return auctionService.getAuction(auctionId);
+    }
+
     @Validated
     @PutMapping("/auctions/{auctionId}")
     public void updateAuction(@PathVariable UUID auctionId,
@@ -39,10 +44,9 @@ public class AuctionController {
         auctionService.updateAuction(auction);
     }
 
-    @GetMapping("/auctions/{auctionId}")
-    public AuctionDto getAuction(@PathVariable UUID auctionId) {
-        return auctionService.getAuction(auctionId);
+    @Validated
+    @DeleteMapping("/auctions/{auctionId}")
+    public void deleteAuction(@PathVariable UUID auctionId) {
+        auctionService.deleteAuction(auctionId);
     }
-
-
 }
