@@ -1,66 +1,37 @@
-package jackhaynes.auctions.api.entities;
+package jackhaynes.auctions.api.dtos;
 
-import jakarta.persistence.*;
+import jackhaynes.auctions.api.entities.AuctionStatus;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Entity(name = "Auction")
-@Table(name = "auction")
-public class Auction {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id", updatable = false)
+public class AuctionDto {
     private UUID id;
-
-    @Column(name = "reserve_price", nullable = false)
+    @Min(1)
     private int reservePrice;
-
-    @Column(name = "seller", nullable = false)
+    @NotNull
+    @NotEmpty
     private String seller;
-
-    @Column(name = "winner", nullable = false)
+    @NotNull
+    @NotEmpty
     private String winner;
-
-    @Column(name = "sold_amount", nullable = true)
     private Integer soldAmount;
-
-    @Column(name = "current_high_bid", nullable = true)
     private Integer currentHighBid;
-
-    @Column(name = "created_at", nullable = false)
+    @NotNull
     private LocalDateTime createdAt;
-
-    @Column(name = "updated_at", nullable = false)
+    @NotNull
     private LocalDateTime updatedAt;
-
-    @Column(name = "auction_end", nullable = false)
+    @NotNull
     private LocalDateTime auctionEnd;
-
-    @Column(name = "status", nullable = false)
+    @NotNull
     private AuctionStatus status;
+    @NotNull
+    private ItemDto item;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "item_id", referencedColumnName = "id")
-    private Item item;
-
-    public Auction() { }
-
-    public Auction(UUID id, int reservePrice, String seller, String winner, int soldAmount, int currentHighBid,
-                   LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime auctionEnd, AuctionStatus status,
-                   Item item) {
-        this.id = id;
-        this.reservePrice = reservePrice;
-        this.seller = seller;
-        this.winner = winner;
-        this.soldAmount = soldAmount;
-        this.currentHighBid = currentHighBid;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.auctionEnd = auctionEnd;
-        this.status = status;
-        this.item = item;
-    }
+    public AuctionDto() {};
 
     public UUID getId() {
         return id;
@@ -102,7 +73,7 @@ public class Auction {
         this.soldAmount = soldAmount;
     }
 
-    public int getCurrentHighBid() {
+    public Integer getCurrentHighBid() {
         return currentHighBid;
     }
 
@@ -142,11 +113,11 @@ public class Auction {
         this.status = status;
     }
 
-    public Item getItem() {
+    public ItemDto getItem() {
         return item;
     }
 
-    public void setItem(Item item) {
+    public void setItem(ItemDto item) {
         this.item = item;
     }
 }

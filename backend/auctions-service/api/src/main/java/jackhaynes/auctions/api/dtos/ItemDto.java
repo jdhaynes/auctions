@@ -1,51 +1,33 @@
-package jackhaynes.auctions.api.entities;
+package jackhaynes.auctions.api.dtos;
 
-import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.UUID;
 
-@Entity(name = "Item")
-@Table(name = "item")
-public class Item {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id", updatable = false)
+public class ItemDto {
     private UUID id;
-
-    @Column(name = "make", nullable = false)
+    @NotNull
+    @NotEmpty
     private String make;
-
-    @Column(name = "model", nullable = false)
+    @NotNull
+    @NotEmpty
     private String model;
-
-    @Column(name = "year", nullable = false)
+    @NotNull
+    @Min(1800)
     private int year;
-
-    @Column(name = "colour", nullable = false)
+    @NotNull
+    @NotEmpty
     private String colour;
-
-    @Column(name = "mileage", nullable = false)
+    @NotNull
+    @NotEmpty
     private int mileage;
-
-    @Column(name = "image_url", nullable = false)
+    @NotNull
+    @NotEmpty
     private String imageUrl;
 
-    @OneToOne(mappedBy = "item")
-    private Auction auction;
-
-    public Item() {
-    }
-
-    public Item(UUID id, String make, String model, int year, String colour, int mileage, String imageUrl, Auction auction) {
-        this.id = id;
-        this.make = make;
-        this.model = model;
-        this.year = year;
-        this.colour = colour;
-        this.mileage = mileage;
-        this.imageUrl = imageUrl;
-        this.auction = auction;
-    }
+    public ItemDto() { }
 
     public UUID getId() {
         return id;
@@ -101,13 +83,5 @@ public class Item {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
-    }
-
-    public Auction getAuction() {
-        return auction;
-    }
-
-    public void setAuction(Auction auction) {
-        this.auction = auction;
     }
 }
