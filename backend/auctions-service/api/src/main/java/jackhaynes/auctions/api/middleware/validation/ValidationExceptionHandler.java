@@ -13,10 +13,11 @@ import java.util.*;
 @RestControllerAdvice
 public class ValidationExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<List<ValidationError>> handle(MethodArgumentNotValidException ex) {
+    public ResponseEntity<ValidationResponse> handle(MethodArgumentNotValidException ex) {
         List<ValidationError> errors = getErrorsFromException(ex);
+        ValidationResponse response = createResponse(errors);
 
-        return new ResponseEntity<>(errors, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(response, new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
 
     private List<ValidationError> getErrorsFromException(MethodArgumentNotValidException ex) {
@@ -42,5 +43,12 @@ public class ValidationExceptionHandler {
         }
 
         return new ArrayList<>(errors.values());
+    }
+
+    private ValidationResponse createResponse(List<ValidationError> errors) {
+        String message = "One or more validation errors occurred.";
+        String code = "VALIDATION_ERROR";
+
+        return new ValidationResponse(message, code, errors);
     }
 }
