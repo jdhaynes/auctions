@@ -10,8 +10,6 @@ public interface AuctionService {
     List<AuctionDto> getAuctions(LocalDateTime date);
     AuctionDto getAuction(UUID id);
     void createAuction(AuctionDto auction);
-
     void updateAuction(AuctionDto auction);
-
     void deleteAuction(UUID auctionId);
 }
